@@ -282,6 +282,56 @@
     }
   },
   {
+    "type": "else_clause",
+    "named": true,
+    "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "elseif_clause",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "primary_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      },
+      "consequence": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "expression_statement",
     "named": true,
     "fields": {},
@@ -338,16 +388,6 @@
     "type": "if_statement",
     "named": true,
     "fields": {
-      "alternative": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      },
       "condition": {
         "multiple": false,
         "required": true,
@@ -376,6 +416,20 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "else_clause",
+          "named": true
+        },
+        {
+          "type": "elseif_clause",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -809,6 +863,10 @@
   },
   {
     "type": "Else",
+    "named": false
+  },
+  {
+    "type": "ElseIf",
     "named": false
   },
   {
