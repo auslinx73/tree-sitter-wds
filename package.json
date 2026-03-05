@@ -1,0 +1,46 @@
+{
+  "name": "tree-sitter-wds",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for Isadora Widget Designer Script (.wds)",
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "keywords": [
+    "tree-sitter",
+    "parser",
+    "isadora",
+    "widget-designer"
+  ],
+  "author": "Andrey",
+  "license": "MIT",
+  "dependencies": {
+    "node-addon-api": "^8.3.0",
+    "node-gyp-build": "^4.8.4"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.1"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.24.0",
+    "prebuildify": "^6.0.1"
+  },
+  "scripts": {
+    "build": "tree-sitter generate && node-gyp build",
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test",
+    "parse": "tree-sitter parse"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.wds",
+      "file-types": [
+        "wds"
+      ],
+      "highlights": "queries/highlights.scm"
+    }
+  ]
+}

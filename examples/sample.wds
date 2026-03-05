@@ -1,0 +1,66 @@
+// Projector power check script
+// Controls Optoma projector via TCP
+
+TcpStart(pj_tcp_id)
+WDWait(0.5)
+TcpSend(pj_tcp_id, "%1POWR ?[CR]")
+WDWait(0.05)
+
+var localOptomaTCPResponce = OptomaTcpResponce.Trim
+var local_pwr_responces_list = power_responses_list.Copy
+
+TcpStop(pj_tcp_id)
+
+Switch localOptomaTCPResponce {
+	Case local_pwr_responces_list[1]
+		power_status = "off"
+	Case local_pwr_responces_list[2]
+		power_status = "on"
+	Case local_pwr_responces_list[3]
+		power_status = "cooling"
+	Case Else
+		power_status = "??"
+}
+
+WDWait(0.05)
+
+var buttonPwrOnNum = 1
+var buttonPwrOffNum = 2
+
+Switch power_status {
+	Case "on"
+		WDCustomScriptLabelColor(buttonPwrOnNum, 0, 255, 0)
+		WDCustomScriptLabelColor(buttonPwrOffNum, 125, 125, 125)
+	Case "off"
+		WDCustomScriptLabelColor(buttonPwrOnNum, 125, 125, 125)
+		WDCustomScriptLabelColor(buttonPwrOffNum, 255, 0, 0)
+	Case "cooling"
+		WDCustomScriptLabelColor(buttonPwrOnNum, 125, 125, 0)
+		WDCustomScriptLabelColor(buttonPwrOffNum, 125, 125, 0)
+	Case Else
+		WDCustomScriptLabelColor(buttonPwrOnNum, 125, 125, 125)
+		WDCustomScriptLabelColor(buttonPwrOffNum, 125, 125, 125)
+}
+
+// Format minutes to HH:MM
+var formattedHours = ""
+var formattedMinutes = ""
+var hours = Math.floor(minutes / 60)
+var remainingMinutes = Math.Mod(minutes, 60)
+var result = ""
+
+If hours < 10 {
+	formattedHours = "0" + hours.ToString
+} Else {
+	formattedHours = hours.ToString
+}
+
+If remainingMinutes < 10 {
+	formattedMinutes = "0" + remainingMinutes.ToString
+} Else {
+	formattedMinutes = remainingMinutes.ToString
+}
+
+result = formattedHours + ":" + formattedMinutes
+
+return result
