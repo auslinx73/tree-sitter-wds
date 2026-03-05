@@ -78,10 +78,10 @@ module.exports = grammar({
       repeat($._statement),
     ),
 
-    return_statement: $ => seq(
+    return_statement: $ => prec.right(seq(
       'return',
       optional($._expression),
-    ),
+    )),
 
     expression_statement: $ => $._expression,
 
@@ -126,7 +126,6 @@ module.exports = grammar({
       // Logical
       prec.left(1, seq(field('left', $._expression), field('operator', '&&'), field('right', $._expression))),
       prec.left(1, seq(field('left', $._expression), field('operator', '||'), field('right', $._expression))),
-      // String concatenation (same as +)
     ),
 
     unary_expression: $ => choice(
