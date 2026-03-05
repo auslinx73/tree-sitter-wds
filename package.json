@@ -1,13 +1,12 @@
 {
   "name": "tree-sitter-wds",
   "version": "0.1.0",
-  "description": "Tree-sitter grammar for Isadora Widget Designer Script (.wds)",
+  "description": "Tree-sitter grammar for Widget Designer Script (.wds)",
   "main": "bindings/node",
   "types": "bindings/node",
   "keywords": [
     "tree-sitter",
     "parser",
-    "isadora",
     "widget-designer"
   ],
   "author": "Andrey",

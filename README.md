@@ -1,6 +1,6 @@
 # WDS — Widget Designer Script для Zed
 
-Поддержка языка Isadora Widget Designer Script (.wds) для редактора Zed.
+Поддержка языка Widget Designer Script (.wds) для редактора Zed.
 
 ## Структура проекта
 
