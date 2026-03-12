@@ -1,76 +1,99 @@
-"var" @keyword
-"Var" @keyword
-"VAR" @keyword
+; Keywords
+[
+  "var"
+] @keyword
 
-"if" @keyword
-"If" @keyword
-"IF" @keyword
+[
+  "if"
+  "If"
+  "IF"
+] @keyword
 
-"elseif" @keyword
-"Elseif" @keyword
-"ElseIf" @keyword
-"ELSEIF" @keyword
+[
+  "elseif"
+  "ElseIf"
+  "Elseif"
+  "ELSEIF"
+] @keyword
 
-"else" @keyword
-"Else" @keyword
-"ELSE" @keyword
+[
+  "else"
+  "Else"
+  "ELSE"
+] @keyword
 
-"switch" @keyword
-"Switch" @keyword
-"SWITCH" @keyword
+[
+  "switch"
+  "Switch"
+  "SWITCH"
+] @keyword
 
-"case" @keyword
-"Case" @keyword
-"CASE" @keyword
+[
+  "case"
+  "Case"
+  "CASE"
+] @keyword
 
-"for" @keyword
-"For" @keyword
-"FOR" @keyword
+[
+  "for"
+  "For"
+  "FOR"
+] @keyword
 
-"foreach" @keyword
-"Foreach" @keyword
-"ForEach" @keyword
-"FOREACH" @keyword
+[
+  "foreach"
+  "Foreach"
+  "ForEach"
+  "FOREACH"
+] @keyword
 
-"return" @keyword
-"Return" @keyword
-"RETURN" @keyword
+[
+  "return"
+  "Return"
+  "RETURN"
+] @keyword
 
-"break" @keyword
-"Break" @keyword
-"BREAK" @keyword
+[
+  "break"
+  "Break"
+  "BREAK"
+] @keyword
 
-"exit" @keyword
-"Exit" @keyword
-"EXIT" @keyword
+[
+  "exit"
+  "Exit"
+  "EXIT"
+] @keyword
 
-"and" @operator
-"And" @operator
-"AND" @operator
+[
+  "to"
+  "To"
+  "TO"
+] @keyword
 
-"or" @operator
-"Or" @operator
-"OR" @operator
+[
+  "in"
+  "In"
+  "IN"
+] @keyword
 
-"to" @keyword
-"To" @keyword
-"TO" @keyword
+[
+  "step"
+  "Step"
+  "STEP"
+] @keyword
 
-"in" @keyword
-"In" @keyword
-"IN" @keyword
-
-"step" @keyword
-"Step" @keyword
-"STEP" @keyword
-
+; Literals
 (boolean) @constant
 (number) @number
 (string) @string
 (string_content) @string
 (string_content_single) @string
+
+; Comments
 (comment) @comment
 
+; Operators
 "=" @operator
 "==" @operator
 "!=" @operator
@@ -90,19 +113,16 @@
 "||" @operator
 "^" @operator
 "!" @operator
+"and" @operator
+"or" @operator
 
-(function_call
-  function: (identifier) @function)
-
-(function_call
-  function: (member_expression
-    property: (identifier) @function.method))
-
+; Variables
 (variable_declaration
   name: (identifier) @variable)
 
-(member_expression
-  property: (identifier) @property)
+(assignment_statement
+  left: (lvalue
+    (identifier) @variable))
 
 (member_expression
   object: (identifier) @variable)
@@ -112,11 +132,38 @@
 
 (identifier) @variable
 
+; Properties and methods
+(member_expression
+  property: (identifier) @property)
+
+(function_call
+  function: (member_expression
+    property: (identifier) @function.method))
+
+; Function calls
+(function_call
+  function: (identifier) @function)
+
+; Built-in WD/TCP/UDP functions
+((function_call
+  function: (identifier) @function.builtin)
+  (#match? @function.builtin "^(WD|Tcp|Udp)"))
+
+; Punctuation
 "(" @punctuation.bracket
 ")" @punctuation.bracket
-"{" @punctuation.bracket
-"}" @punctuation.bracket
 "[" @punctuation.bracket
 "]" @punctuation.bracket
+
+"{" @punctuation.special
+"}" @punctuation.special
+
 "," @punctuation.delimiter
 "." @punctuation.delimiter
+; Fallback keyword highlighting when parser treats keywords as identifiers
+((identifier) @keyword
+  (#match? @keyword "^(var|Var|VAR|if|If|IF|elseif|ElseIf|Elseif|ELSEIF|else|Else|ELSE|switch|Switch|SWITCH|case|Case|CASE|for|For|FOR|foreach|Foreach|ForEach|FOREACH|return|Return|RETURN|break|Break|BREAK|exit|Exit|EXIT|to|To|TO|in|In|IN|step|Step|STEP)$"))
+
+; Fallback built-in function highlighting
+((identifier) @function.builtin
+  (#match? @function.builtin "^(WD|Tcp|Udp)[A-Za-z0-9_]*$"))
