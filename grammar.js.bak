@@ -144,13 +144,7 @@ module.exports = grammar({
 
     // ─── Return / Break / Exit ────────────────────────────────
     return_statement: ($) =>
-      prec.right(
-        1,
-        seq(
-          choice("return", "Return", "RETURN"),
-          field("value", $._expression),
-        ),
-      ),
+      seq(choice("return", "Return", "RETURN"), optional($._expression)),
 
     break_statement: ($) => choice("break", "Break", "BREAK"),
 
@@ -369,4 +363,3 @@ module.exports = grammar({
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
   },
 });
-

@@ -1,70 +1,117 @@
-; ─── Keywords ──────────────────────────────────────────────────
 "var" @keyword
-"If" @keyword.conditional
-"Else" @keyword.conditional
-"Switch" @keyword.conditional
-"Case" @keyword.conditional
-"return" @keyword.return
+"Var" @keyword
+"VAR" @keyword
 
-; ─── Literals ──────────────────────────────────────────────────
+"if" @keyword
+"If" @keyword
+"IF" @keyword
+
+"elseif" @keyword
+"Elseif" @keyword
+"ElseIf" @keyword
+"ELSEIF" @keyword
+
+"else" @keyword
+"Else" @keyword
+"ELSE" @keyword
+
+"switch" @keyword
+"Switch" @keyword
+"SWITCH" @keyword
+
+"case" @keyword
+"Case" @keyword
+"CASE" @keyword
+
+"for" @keyword
+"For" @keyword
+"FOR" @keyword
+
+"foreach" @keyword
+"Foreach" @keyword
+"ForEach" @keyword
+"FOREACH" @keyword
+
+"return" @keyword
+"Return" @keyword
+"RETURN" @keyword
+
+"break" @keyword
+"Break" @keyword
+"BREAK" @keyword
+
+"exit" @keyword
+"Exit" @keyword
+"EXIT" @keyword
+
+"and" @operator
+"And" @operator
+"AND" @operator
+
+"or" @operator
+"Or" @operator
+"OR" @operator
+
+"to" @keyword
+"To" @keyword
+"TO" @keyword
+
+"in" @keyword
+"In" @keyword
+"IN" @keyword
+
+"step" @keyword
+"Step" @keyword
+"STEP" @keyword
+
+(boolean) @constant
 (number) @number
 (string) @string
 (string_content) @string
-(escape_sequence) @string.escape
-(boolean) @boolean
-
-; ─── Comments ──────────────────────────────────────────────────
+(string_content_single) @string
 (comment) @comment
 
-; ─── Operators ─────────────────────────────────────────────────
-(binary_expression
-  operator: _ @operator)
-(unary_expression
-  operator: _ @operator)
-
 "=" @operator
+"==" @operator
+"!=" @operator
+">" @operator
+"<" @operator
+">=" @operator
+"<=" @operator
+"+" @operator
+"-" @operator
+"*" @operator
+"/" @operator
+"+=" @operator
+"-=" @operator
+"*=" @operator
+"/=" @operator
+"&&" @operator
+"||" @operator
+"^" @operator
+"!" @operator
 
-; ─── Functions ─────────────────────────────────────────────────
 (function_call
-  function: (identifier) @function.call)
+  function: (identifier) @function)
 
 (function_call
   function: (member_expression
     property: (identifier) @function.method))
 
-; ─── Built-in WD functions ─────────────────────────────────────
-((function_call
-  function: (identifier) @function.builtin)
-  (#match? @function.builtin "^(WD|Tcp|Udp)"))
-
-; ─── Math built-in ─────────────────────────────────────────────
-((member_expression
-  object: (identifier) @type.builtin)
-  (#eq? @type.builtin "Math"))
-
-; ─── Variables ─────────────────────────────────────────────────
 (variable_declaration
   name: (identifier) @variable)
 
-(assignment_statement
-  left: (lvalue
-    (identifier) @variable))
-
-; ─── Member access ─────────────────────────────────────────────
 (member_expression
   property: (identifier) @property)
 
 (member_expression
   object: (identifier) @variable)
 
-; ─── Subscript ─────────────────────────────────────────────────
 (subscript_expression
   object: (identifier) @variable)
 
-; ─── Parameters (identifiers in general) ───────────────────────
 (identifier) @variable
 
-; ─── Punctuation ───────────────────────────────────────────────
 "(" @punctuation.bracket
 ")" @punctuation.bracket
 "{" @punctuation.bracket

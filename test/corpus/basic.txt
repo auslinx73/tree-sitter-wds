@@ -1,153 +1,71 @@
-================
+=====================================
 Variable declaration
-================
+=====================================
 
-var x = 10
+var x = 42
 var name = "hello"
-var flag = true
+var flag = True
 
 ---
 
 (source_file
   (variable_declaration
     name: (identifier)
-    value: (number))
+    value: (primary_expression
+      (number)))
   (variable_declaration
     name: (identifier)
-    value: (string (string_content)))
+    value: (primary_expression
+      (string
+        (string_content))))
   (variable_declaration
     name: (identifier)
-    value: (boolean)))
+    value: (primary_expression
+      (boolean))))
 
-================
+=====================================
 Function calls
-================
+=====================================
 
-TcpStart(pj_tcp_id)
+TcpStart(conn_id)
 WDWait(0.5)
-TcpSend(pj_tcp_id,"%1POWR ?[CR]")
+TcpSend(tcp_id, "hello")
 
 ---
 
 (source_file
   (expression_statement
-    (function_call
-      function: (identifier)
-      arguments: (argument_list (identifier))))
+    (primary_expression
+      (function_call
+        function: (identifier)
+        arguments: (argument_list
+          (primary_expression
+            (identifier))))))
   (expression_statement
-    (function_call
-      function: (identifier)
-      arguments: (argument_list (number))))
+    (primary_expression
+      (function_call
+        function: (identifier)
+        arguments: (argument_list
+          (primary_expression
+            (number))))))
   (expression_statement
-    (function_call
-      function: (identifier)
-      arguments: (argument_list
-        (identifier)
-        (string (string_content))))))
+    (primary_expression
+      (function_call
+        function: (identifier)
+        arguments: (argument_list
+          (primary_expression
+            (identifier))
+          (primary_expression
+            (string
+              (string_content))))))))
 
-================
-If statement
-================
-
-If hours < 10 {
-  formattedHours = "0" + hours.ToString
-} Else {
-  formattedHours = hours.ToString
-}
-
----
-
-(source_file
-  (if_statement
-    condition: (binary_expression
-      left: (identifier)
-      right: (number))
-    consequence: (block
-      (assignment_statement
-        left: (lvalue (identifier))
-        right: (binary_expression
-          left: (string (string_content))
-          right: (member_expression
-            object: (identifier)
-            property: (identifier)))))
-    alternative: (block
-      (assignment_statement
-        left: (lvalue (identifier))
-        right: (member_expression
-          object: (identifier)
-          property: (identifier))))))
-
-================
-Switch statement
-================
-
-Switch power_status {
-  Case "on"
-    x = 1
-  Case "off"
-    x = 2
-  Case Else
-    x = 0
-}
-
----
-
-(source_file
-  (switch_statement
-    value: (identifier)
-    (case_clause
-      value: (string (string_content))
-      (assignment_statement
-        left: (lvalue (identifier))
-        right: (number)))
-    (case_clause
-      value: (string (string_content))
-      (assignment_statement
-        left: (lvalue (identifier))
-        right: (number)))
-    (case_else_clause
-      (assignment_statement
-        left: (lvalue (identifier))
-        right: (number)))))
-
-================
-Member and method access
-================
-
-var result = Math.floor(minutes / 60)
-var trimmed = OptomaTcpResponce.Trim
-var item = list.Copy
-
----
-
-(source_file
-  (variable_declaration
-    name: (identifier)
-    value: (function_call
-      function: (member_expression
-        object: (identifier)
-        property: (identifier))
-      arguments: (argument_list
-        (binary_expression
-          left: (identifier)
-          right: (number)))))
-  (variable_declaration
-    name: (identifier)
-    value: (member_expression
-      object: (identifier)
-      property: (identifier)))
-  (variable_declaration
-    name: (identifier)
-    value: (member_expression
-      object: (identifier)
-      property: (identifier))))
-
-================
+=====================================
 Comments
-================
+=====================================
 
-// This is a comment
-var x = 1 // inline comment
+// this is a comment
+var x = 42
+// end
 
 ---
 
@@ -155,12 +73,13 @@ var x = 1 // inline comment
   (comment)
   (variable_declaration
     name: (identifier)
-    value: (number))
+    value: (primary_expression
+      (number)))
   (comment))
 
-================
+=====================================
 Return statement
-================
+=====================================
 
 return result
 
@@ -168,25 +87,55 @@ return result
 
 (source_file
   (return_statement
-    (identifier)))
+    (primary_expression
+      (identifier))))
 
-================
-Subscript access
-================
+=====================================
+For loop
+=====================================
 
-var item = list[1]
-power_status = local_pwr_responces_list[2]
+For i = 1 to 5 {
+  WDWait(1)
+}
 
 ---
 
 (source_file
-  (variable_declaration
-    name: (identifier)
-    value: (subscript_expression
-      object: (identifier)
-      index: (number)))
-  (assignment_statement
-    left: (lvalue (identifier))
-    right: (subscript_expression
-      object: (identifier)
-      index: (number))))
+  (for_statement
+    variable: (identifier)
+    start: (primary_expression
+      (number))
+    end: (primary_expression
+      (number))
+    body: (block
+      (expression_statement
+        (primary_expression
+          (function_call
+            function: (identifier)
+            arguments: (argument_list
+              (primary_expression
+                (number)))))))))
+
+=====================================
+ForEach loop
+=====================================
+
+ForEach item in myList {
+  DebugMessage(item)
+}
+
+---
+
+(source_file
+  (foreach_statement
+    variable: (identifier)
+    iterable: (primary_expression
+      (identifier))
+    body: (block
+      (expression_statement
+        (primary_expression
+          (function_call
+            function: (identifier)
+            arguments: (argument_list
+              (primary_expression
+                (identifier)))))))))
